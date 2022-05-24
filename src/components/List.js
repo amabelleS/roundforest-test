@@ -19,7 +19,7 @@ const List = () => {
         throw new Error(`HTTP error: ${response.status}`);
       }
       const data = await response.json();
-      console.log('🚀 ~ file: List.js ~ line 15 ~ fetchList ~ data', data);
+      //   console.log('🚀 ~ file: List.js ~ line 15 ~ fetchList ~ data', data);
 
       const postsWithNames = data.map((post) => {
         return {
@@ -27,10 +27,10 @@ const List = () => {
           name: findNameById(post.userId),
         };
       });
-      console.log(
-        '🚀 ~ file: List.js ~ line 29 ~ postsWithNames ~ postsWithNames',
-        postsWithNames
-      );
+      //   console.log(
+      //     '🚀 ~ file: List.js ~ line 29 ~ postsWithNames ~ postsWithNames',
+      //     postsWithNames
+      //   );
 
       setList(postsWithNames);
     } catch (error) {
@@ -78,6 +78,9 @@ const List = () => {
 
   useEffect(() => {
     fetchList();
+  }, [names]);
+
+  useEffect(() => {
     fetchNames();
   }, []);
 
@@ -85,7 +88,7 @@ const List = () => {
     if (list) {
       searchPosts(searchTerm);
     }
-  }, [searchTerm]);
+  }, [searchTerm, list]);
 
   return (
     <>
