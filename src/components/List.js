@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ListItem from './ListItem';
+import SearchIcon from './search.svg';
 
 import './List.css';
 
 const List = () => {
   const [list, setList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -26,12 +28,38 @@ const List = () => {
     }
   };
 
+  const searchPosts = (searchTerm) => {
+    const filteredList = list.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.body.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setList(filteredList);
+  };
+
   useEffect(() => {
     fetchList();
   }, []);
 
+  useEffect(() => {
+    searchPosts(searchTerm);
+  }, [searchTerm]);
+
   return (
     <>
+      <div className="search">
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for posts"
+          onKeyDown={(e) => e.key === 'Enter' && searchPosts(searchTerm)}
+        />
+        <img
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchPosts(searchTerm)}
+        />
+      </div>
       {list?.length > 0 ? (
         <ul>
           {list.map((item) => (
