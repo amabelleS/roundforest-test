@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import ListItem from './ListItem';
+
+import './List.css';
 
 const List = () => {
   const [list, setList] = useState([]);
@@ -14,7 +17,7 @@ const List = () => {
       const data = await response.json();
       console.log('🚀 ~ file: List.js ~ line 15 ~ fetchList ~ data', data);
 
-      // setList(data);
+      setList(data);
     } catch (error) {
       console.log(
         '🚀 ~ file: MoviesList.jsx ~ line 27 ~ searchMovies ~ error',
@@ -24,10 +27,23 @@ const List = () => {
   };
 
   useEffect(() => {
-    fetchList('moon');
+    fetchList();
   }, []);
 
-  return <div>List</div>;
+  return (
+    <>
+      {/* <h1>List</h1> */}
+      {list?.length > 0 ? (
+        <ul className="main">
+          {list.map((item) => (
+            <ListItem key={item.id} item={item} />
+          ))}
+        </ul>
+      ) : (
+        <h2>Not found</h2>
+      )}
+    </>
+  );
 };
 
 export default List;
