@@ -3,10 +3,13 @@ import React from 'react';
 import './ListItem';
 
 const ListItem = ({ item }) => {
-  const { title, id, userId, body } = item;
+  const { title, id, userId, body, name } = item;
   return (
     <li className="item">
-      <h4>{title}</h4>
+      <div>
+        <h3>{name}</h3>
+        <h4>{title}</h4>
+      </div>
       <span>{body}</span>
     </li>
   );

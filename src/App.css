@@ -22,7 +22,12 @@ body {
 .header {
   text-align: center;
   color: #f4e5c2;
-  padding: 1rem;
+  padding: 0.2rem;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
 }
 
 .main {
@@ -45,7 +50,8 @@ ul {
 }
 
 li {
-  width: 48%;
+    width: 48%;
+    /* text-align: ; */
     overflow-y: hidden;
     overflow-x: hidden;
     align-items: center;
@@ -54,6 +60,11 @@ li {
     border-radius: 8px 0;
     background: white;
     font-weight: bold;
+}
+
+li:hover {
+    background: #cbecf0;
+    cursor: pointer;
 }
 
 h4 {
