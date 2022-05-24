@@ -32,9 +32,8 @@ const List = () => {
 
   return (
     <>
-      {/* <h1>List</h1> */}
       {list?.length > 0 ? (
-        <ul className="main">
+        <ul>
           {list.map((item) => (
             <ListItem key={item.id} item={item} />
           ))}
