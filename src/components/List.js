@@ -14,6 +14,18 @@ const List = () => {
 
   const fetchList = async () => {
     try {
+      const responseForNames = await fetch(
+        `https://jsonplaceholder.typicode.com/users`
+      );
+      if (!responseForNames.ok) {
+        throw new Error(`HTTP error: ${responseForNames.status}`);
+      }
+      const namesData = await responseForNames.json();
+      console.log(
+        '🚀 ~ file: List.js ~ line 24 ~ fetchList ~ namesData',
+        namesData
+      );
+
       const response = await fetch(`${API_URL}`);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
@@ -22,15 +34,16 @@ const List = () => {
       //   console.log('🚀 ~ file: List.js ~ line 15 ~ fetchList ~ data', data);
 
       const postsWithNames = data.map((post) => {
+        const name = namesData.filter((author) => author.id === post.userId);
         return {
           ...post,
-          name: findNameById(post.userId),
+          name: name[0].name,
         };
       });
-      //   console.log(
-      //     '🚀 ~ file: List.js ~ line 29 ~ postsWithNames ~ postsWithNames',
-      //     postsWithNames
-      //   );
+      console.log(
+        '🚀 ~ file: List.js ~ line 29 ~ postsWithNames ~ postsWithNames',
+        postsWithNames
+      );
 
       setList(postsWithNames);
     } catch (error) {
@@ -41,31 +54,32 @@ const List = () => {
     }
   };
 
-  const findNameById = (id) => {
-    const user = names?.filter((user) => id === user.id);
-    // console.log('🚀 ~ file: List.js ~ line 45 ~ findNameById ~ user', user);
-    return user[0].name;
-  };
+  // :(
+  //   const findNameById = (id) => {
+  //     const user = names?.filter((user) => id === user.id);
+  //     // console.log('🚀 ~ file: List.js ~ line 45 ~ findNameById ~ user', user);
+  //     return user[0].name;
+  //   };
 
-  const fetchNames = async () => {
-    try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
-      const data = await response.json();
-      // console.log('🚀 ~ file: List.js ~ line 40 ~ fetchList ~ data', data);
+  //   const fetchNames = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://jsonplaceholder.typicode.com/users`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       console.log('🚀 ~ file: List.js ~ line 40 ~ fetchList ~ data', data);
 
-      setNames(data);
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: MoviesList.jsx ~ line 27 ~ searchMovies ~ error',
-        error
-      );
-    }
-  };
+  //       setNames(data);
+  //     } catch (error) {
+  //       console.log(
+  //         '🚀 ~ file: MoviesList.jsx ~ line 27 ~ searchMovies ~ error',
+  //         error
+  //       );
+  //     }
+  //   };
 
   const searchPosts = (searchTerm) => {
     const filteredList = list.filter(
@@ -78,11 +92,12 @@ const List = () => {
 
   useEffect(() => {
     fetchList();
-  }, [names]);
-
-  useEffect(() => {
-    fetchNames();
   }, []);
+
+  //:(
+  //   useEffect(() => {
+  //     fetchNames();
+  //   }, []);
 
   useEffect(() => {
     if (list) {
